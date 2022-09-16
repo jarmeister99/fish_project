@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "rootDir": "./app/src",
+        "outDir": "./app/dist/",
+        "noImplicitAny": true,
+        "module": "es6",
+        "target": "es5",
+        "jsx": "react-jsx",
+        "jsxImportSource": "@emotion/react",
+        "allowJs": true,
+        "checkJs": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+    }
+}
