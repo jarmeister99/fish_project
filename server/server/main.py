@@ -2,10 +2,17 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn  # type: ignore
 
+# Load environment
+from dotenv import load_dotenv
+
+from server.api.fish.fish import FishAPI
+
+load_dotenv()
+
 app = FastAPI()
 
+# Load middleware
 origins = ["*"]
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -15,10 +22,15 @@ app.add_middleware(
 )
 
 
+@app.get("/")
+async def route_test():
+    pass
+
+
+# Define routes
 @app.get("/fish")
 async def get_fish():
-    return [
-    ]
+    return FishAPI.list()
 
 
 @app.get("/fish/{fish_id}")
