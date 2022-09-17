@@ -23,18 +23,18 @@ app.add_middleware(
 
 
 @app.get("/")
-async def route_test():
+def route_test():
     pass
 
 
 # Define routes
 @app.get("/fish")
-async def get_fish():
+def get_fish():
     return FishAPI.list()
 
 
 @app.get("/fish/{fish_id}")
-async def get_fish(fish_id: int):
+def get_fish(fish_id: int):
     return {"fish_id": fish_id}
 
 

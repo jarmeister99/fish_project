@@ -1,23 +1,22 @@
 import axios from 'axios';
 
-export interface PlantSearchRequest {
+export interface FishSearchRequest {
     common_name?: string;
     botanical_name?: string;
 }
 
-export interface Plant {
-    id: number;
+export interface Fish {
+    id: string;
     common_name: string;
-    botanical_name: string;
-    description: string;
-    image_url?: string;
+    scientific_name: string;
+    max_length_inches: number;
 }
 
-export interface PlantSearchResponse {
-    plants: Plant[];
+export interface FishSearchResponse {
+    fish: Fish[];
 }
 
-export const getAllPlants = async () => {
-    const res = await axios.get('http://localhost:8000/plants');
-    return res.data as Plant[];
+export const getAllFish = async () => {
+    const res = await axios.get('http://localhost:8000/fish');
+    return res.data as Fish[];
 }
