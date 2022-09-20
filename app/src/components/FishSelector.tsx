@@ -29,7 +29,8 @@ export const FishSelector: React.FC = () => {
     }
 
     const fish = [
-        {"common_name": "bamboo shrimp"}
+        {"common_name": "bamboo shrimp"},
+        {"common_name": "black neon tetra"}
     ]
     return (
         <div>

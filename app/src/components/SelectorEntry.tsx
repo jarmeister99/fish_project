@@ -18,7 +18,7 @@ const QuantitySelector: React.FC<PropsWithChildren<QuantitySelectorProps>> = (pr
 
 
     const onClickMinus = () => {
-        if (count > 0){
+        if (count > 0) {
             setCount(count - 1);
         }
     }
@@ -26,7 +26,7 @@ const QuantitySelector: React.FC<PropsWithChildren<QuantitySelectorProps>> = (pr
     const onClickPlus = () => {
         setCount(count + 1);
     }
-    
+
     return (
         <div css={quantitySelectorStyle}>
             <button onClick={onClickMinus}>-</button>
@@ -47,12 +47,23 @@ const selectorEntryStyle = css`
 `
 
 export const SelectorEntry: React.FC<PropsWithChildren<SelectorEntryProps>> = (props: SelectorEntryProps) => {
+    const [selected, setSelected] = useState<boolean>(false);
+
+    const toggleSelected = () => {
+        if (selected){
+            props.updateCount(props.name, 0);
+        }
+        setSelected(!selected);
+    }
+
     return (
         <div css={selectorEntryStyle}>
-            <span>{props.name}</span>
-            <QuantitySelector updateCount={(count: number) => {
-                props.updateCount(props.name, count)
-            }}/>
+            <button onClick={toggleSelected}>{props.name}</button>
+            {selected &&
+                <QuantitySelector updateCount={(count: number) => {
+                    props.updateCount(props.name, count)
+                }} />
+            }
         </div>
     )
 }
