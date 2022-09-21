@@ -40,6 +40,7 @@
     "@emotion/styled": "^11.10.0",
     "@fontsource/alata": "^4.5.8",
     "@fontsource/roboto": "^4.5.8",
+    "@mui/icons-material": "^5.10.6",
     "@mui/material": "^5.10.2",
     "@types/react": "^18.0.17",
     "@typescript-eslint/parser": "^5.37.0",

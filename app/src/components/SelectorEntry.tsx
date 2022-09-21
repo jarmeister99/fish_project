@@ -1,8 +1,11 @@
 import { css } from "@emotion/react";
+import { Button } from "@mui/material";
 import { PropsWithChildren, useEffect, useState } from "react"
 import { useRecoilState } from "recoil";
 import { ProgressPlugin } from "webpack";
 import { FishCount, fishSelectorState } from "./FishSelector";
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 interface QuantitySelectorProps {
     updateCountCallback: (count: number) => void;
@@ -30,10 +33,11 @@ const QuantitySelector: React.FC<PropsWithChildren<QuantitySelectorProps>> = (pr
     }
 
     return (
-        <div css={quantitySelectorStyle}>
-            <button onClick={onClickMinus}>-</button>
+        // we want to stopPropagation here so we don't trigger the onClick of the parent
+        <div onClick={(event) => {event.stopPropagation()}} css={quantitySelectorStyle}>
+            <RemoveIcon onClick={onClickMinus} />
             <span>{count}</span>
-            <button onClick={onClickPlus}>+</button>
+            <AddIcon onClick={onClickPlus} />
         </div>
     )
 }
@@ -43,8 +47,13 @@ export interface SelectorEntryProps {
 }
 
 const selectorEntryStyle = css`
+    margin-bottom: 0.25rem;
+    width: 25rem;
+`
+const selectorButtonStyle = css`
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 `
 
 export const SelectorEntry: React.FC<PropsWithChildren<SelectorEntryProps>> = (props: SelectorEntryProps) => {
@@ -70,10 +79,13 @@ export const SelectorEntry: React.FC<PropsWithChildren<SelectorEntryProps>> = (p
 
     return (
         <div css={selectorEntryStyle}>
-            <button onClick={toggleSelected}>{props.name}</button>
-            {selected &&
-                <QuantitySelector updateCountCallback={updateCount.bind(this)}/>
-            }
+            <Button css={selectorButtonStyle} fullWidth variant="outlined" onClick={toggleSelected}>
+                {props.name}
+                {selected &&
+                    <QuantitySelector updateCountCallback={updateCount.bind(this)}/>
+                }
+            </Button>
+
         </div>
     )
 }

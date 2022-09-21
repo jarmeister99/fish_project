@@ -1,7 +1,9 @@
+import { Button } from "@mui/material"
 import { useEffect, useState } from "react"
 import { atom, useRecoilState } from "recoil"
 import { Fish, getAllFish } from "../srvc/fish"
 import { SelectorEntry } from "./SelectorEntry"
+import { css } from "@emotion/react"
 
 export const fishSelectorState = atom({
     key: 'fishSelectorState',
@@ -12,10 +14,16 @@ export interface FishCount {
     [key: string]: number
 }
 
-// const fish = [
-//     {"common_name": "bamboo shrimp"},
-//     {"common_name": "black neon tetra"}
-// ]
+const selectorContainerStyle = css`
+    display: flex;
+    flex-direction: column;
+    :first-of-type {
+        margin-top: 1rem;
+    }
+    :last-of-type {
+        margin-bottom: 1rem;
+    }
+`
 
 export const FishSelector: React.FC = () => {
     const [fish, setFish] = useState<Fish[]>([])
@@ -34,12 +42,14 @@ export const FishSelector: React.FC = () => {
 
     return (
         <div>
-            <button onClick={processEntries}>
+            <Button variant="contained" onClick={processEntries}>
                 Get Fish
-            </button>
-            {fish.map(f => 
-                <SelectorEntry key={f.common_name} name={f.common_name}></SelectorEntry>
-            )}
+            </Button>
+            <div css={selectorContainerStyle}>
+                {fish.map(f => 
+                    <SelectorEntry key={f.common_name} name={f.common_name}></SelectorEntry>
+                )}
+            </div>
         </div>
     )
 }
