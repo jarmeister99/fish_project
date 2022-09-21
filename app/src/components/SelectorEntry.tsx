@@ -17,13 +17,13 @@ const quantitySelectorStyle = css`
 `
 
 const QuantitySelector: React.FC<PropsWithChildren<QuantitySelectorProps>> = (props: QuantitySelectorProps) => {
-    const [count, setCount] = useState<number>(0)
+    const [count, setCount] = useState<number>(1)
     useEffect(() => {
         props.updateCountCallback(count);
     }, [count])
 
     const onClickMinus = () => {
-        if (count > 0) {
+        if (count > 1) {
             setCount(count - 1);
         }
     }
@@ -65,6 +65,12 @@ export const SelectorEntry: React.FC<PropsWithChildren<SelectorEntryProps>> = (p
             setFishCount({
                 ...fishCount,
                 [props.name]: 0
+            })
+        }
+        else{
+            setFishCount({
+                ...fishCount,
+                [props.name]: 1
             })
         }
         setSelected(!selected);
