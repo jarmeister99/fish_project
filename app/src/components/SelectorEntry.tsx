@@ -79,7 +79,7 @@ export const SelectorEntry: React.FC<PropsWithChildren<SelectorEntryProps>> = (p
 
     return (
         <div css={selectorEntryStyle}>
-            <Button css={selectorButtonStyle} fullWidth variant="outlined" onClick={toggleSelected}>
+            <Button css={selectorButtonStyle} disableRipple fullWidth variant="outlined" onClick={toggleSelected}>
                 {props.name}
                 {selected &&
                     <QuantitySelector updateCountCallback={updateCount.bind(this)}/>
