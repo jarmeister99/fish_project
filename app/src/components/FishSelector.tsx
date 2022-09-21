@@ -1,10 +1,19 @@
-import { useEffect, useState } from "react"
-import { Fish, getAllFish } from "../srvc/fish"
+import { atom, useRecoilState } from "recoil"
 import { SelectorEntry } from "./SelectorEntry"
 
-interface FishCount {
+export const fishSelectorState = atom({
+    key: 'fishSelectorState',
+    default: {}
+})
+
+export interface FishCount {
     [key: string]: number
 }
+
+const fish = [
+    {"common_name": "bamboo shrimp"},
+    {"common_name": "black neon tetra"}
+]
 
 export const FishSelector: React.FC = () => {
     // const [fish, setFish] = useState<Fish[]>([])
@@ -15,30 +24,19 @@ export const FishSelector: React.FC = () => {
     //     }
     //     fetchFish();
     // }, [])
-    const [fishCount, setFishCount] = useState<FishCount>({});
-
-    const updateFishCount = (name: string, count: number) => {
-        setFishCount({
-            ...fishCount,
-            [name]: count
-        })
-    };
+    const [fishCount] = useRecoilState<FishCount>(fishSelectorState);
 
     const processEntries = () => {
         console.log(fishCount);
     }
 
-    const fish = [
-        {"common_name": "bamboo shrimp"},
-        {"common_name": "black neon tetra"}
-    ]
     return (
         <div>
             <button onClick={processEntries}>
                 Get Fish
             </button>
             {fish.map(f => 
-                <SelectorEntry key={f.common_name} updateCount={updateFishCount.bind(this)} name={f.common_name}></SelectorEntry>
+                <SelectorEntry key={f.common_name} name={f.common_name}></SelectorEntry>
             )}
         </div>
     )

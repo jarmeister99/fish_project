@@ -1,8 +1,11 @@
 import { css } from "@emotion/react";
 import { PropsWithChildren, useEffect, useState } from "react"
+import { useRecoilState } from "recoil";
+import { ProgressPlugin } from "webpack";
+import { FishCount, fishSelectorState } from "./FishSelector";
 
 interface QuantitySelectorProps {
-    updateCount: (count: number) => void;
+    updateCountCallback: (count: number) => void;
 }
 
 const quantitySelectorStyle = css`
@@ -13,9 +16,8 @@ const quantitySelectorStyle = css`
 const QuantitySelector: React.FC<PropsWithChildren<QuantitySelectorProps>> = (props: QuantitySelectorProps) => {
     const [count, setCount] = useState<number>(0)
     useEffect(() => {
-        props.updateCount(count);
+        props.updateCountCallback(count);
     }, [count])
-
 
     const onClickMinus = () => {
         if (count > 0) {
@@ -38,7 +40,6 @@ const QuantitySelector: React.FC<PropsWithChildren<QuantitySelectorProps>> = (pr
 
 export interface SelectorEntryProps {
     name: string
-    updateCount: (name: string, count: number) => void;
 }
 
 const selectorEntryStyle = css`
@@ -48,21 +49,30 @@ const selectorEntryStyle = css`
 
 export const SelectorEntry: React.FC<PropsWithChildren<SelectorEntryProps>> = (props: SelectorEntryProps) => {
     const [selected, setSelected] = useState<boolean>(false);
+    const [fishCount, setFishCount] = useRecoilState<FishCount>(fishSelectorState);
 
     const toggleSelected = () => {
         if (selected){
-            props.updateCount(props.name, 0);
+            setFishCount({
+                ...fishCount,
+                [props.name]: 0
+            })
         }
         setSelected(!selected);
+    }
+
+    const updateCount = (count: number) => {
+        setFishCount({
+            ...fishCount,
+            [props.name]: count
+        });
     }
 
     return (
         <div css={selectorEntryStyle}>
             <button onClick={toggleSelected}>{props.name}</button>
             {selected &&
-                <QuantitySelector updateCount={(count: number) => {
-                    props.updateCount(props.name, count)
-                }} />
+                <QuantitySelector updateCountCallback={updateCount.bind(this)}/>
             }
         </div>
     )
