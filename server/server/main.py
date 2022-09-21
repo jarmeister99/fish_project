@@ -22,24 +22,14 @@ app.add_middleware(
 )
 
 
-@app.get("/")
-def route_test():
-    pass
-
-
 # Define routes
 @app.get("/fish")
 def get_fish():
     return FishAPI.list()
 
 
-@app.get("/fish/{fish_id}")
-def get_fish(fish_id: int):
-    return {"fish_id": fish_id}
-
-
 def start():
-    uvicorn.run("server.main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("server.app", host="0.0.0.0", port=8000, reload=True)
 
 
 if __name__ == "__main__":
